@@ -7,6 +7,8 @@ var pop
 var fullsceen = false
 var vsync = false
 var ob
+var screen_halfx
+var screen_halfy
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,8 +16,8 @@ func _ready():
 	logo_tex = load("res://texs/icon.svg")
 	menu_tex = load("res://texs/back.png")
 	
-	var screen_halfx = get_viewport().size.x/2
-	var screen_halfy = get_viewport().size.y/2
+	screen_halfx = get_viewport().size.x/2
+	screen_halfy = get_viewport().size.y/2
 	
 	# background texture
 	var back = TextureRect.new()
@@ -78,7 +80,6 @@ func _ready():
 	vflowcont_settings.set_position(Vector2(10, 10))
 	
 	ob = OptionButton.new()
-	ob.add_item("1152x648")
 	ob.add_item("1280x720")
 	ob.add_item("1600x920")
 	ob.add_item("1920x1080")
@@ -155,9 +156,9 @@ func _handle_resolution_change(selected):
 	elif selection == "1280x720":
 		DisplayServer.window_set_size(Vector2i(1280, 720))
 		get_viewport().size = Vector2i(1280, 720)
-	elif selection == "1152x648":
-		DisplayServer.window_set_size(Vector2i(1152, 648))
-		get_viewport().size = Vector2i(1152, 648)
+		
+	screen_halfx = get_viewport().size.x/2
+	screen_halfy = get_viewport().size.y/2
 pass
 
 func _handle_fullscreen():
@@ -166,5 +167,7 @@ func _handle_fullscreen():
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	screen_halfx = get_viewport().size.x/2
+	screen_halfy = get_viewport().size.y/2
 pass
 
